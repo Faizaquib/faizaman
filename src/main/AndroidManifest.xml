@@ -13,23 +13,24 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
-        android:name=".StarterApplication"
+        android:name="com.parse.starter.StarterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="The Red Button"
+        android:label="Ambulance"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="The Red Button">
+            android:name="com.parse.starter.MainActivity"
+            android:label="Ambulance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name="com.parse.starter.requestView" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -43,8 +44,8 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".VictimActivity"
-            android:label="@string/title_activity_victim"></activity>
+            android:name="com.parse.starter.driverLocationActivity"
+            android:label="@string/title_activity_driver_location"></activity>
     </application>
 
 </manifest>

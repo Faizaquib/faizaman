@@ -30,15 +30,28 @@ public class StarterApplication extends Application {
 
     // Add your initialization code here
     Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
-              .applicationId("9b52353839ac6e4e7f28ac84760f1cbf4ed41fb9")
-              .clientKey("fb5f1d30fca920707cec45aa0a741d864a3fccaa")
-              .server("http://18.219.109.143:80/parse/")
-              .build()
-      );
+            .applicationId("9b52353839ac6e4e7f28ac84760f1cbf4ed41fb9")
+            .clientKey("fb5f1d30fca920707cec45aa0a741d864a3fccaa")
+            .server("http://18.219.109.143:80/parse/")
+            .build()
+    );
 
+    /*ParseObject object = new ParseObject("ExampleObject");
+    object.put("myNumber", "123");
+    object.put("myString", "rob");
 
+    object.saveInBackground(new SaveCallback () {
+      @Override
+      public void done(ParseException ex) {
+        if (ex == null) {
+          Log.i("Parse Result", "Successful!");
+        } else {
+          Log.i("Parse Result", "Failed" + ex.toString());
+        }
+      }
+    });
 
-
+*/
     ParseUser.enableAutomaticUser();
 
     ParseACL defaultACL = new ParseACL();

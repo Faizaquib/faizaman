@@ -8,82 +8,101 @@
  */
 package com.parse.starter;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.Toast;
 
-import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseAnalytics;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
-import com.parse.ParseUser;
+import com.parse.ParseObject;
 import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
 
 
 public class MainActivity extends AppCompatActivity {
 
 
- SharedPreferences sharedPreferences;
- static String phoneno;
-    public void SignUp (View view){
-
-   EditText usernameEditText= (EditText) findViewById(R.id.usernameEditText);
-
-   EditText passwordEditText= (EditText) findViewById(R.id.passwordEditText);
-  if(usernameEditText.getText().toString().matches("") || passwordEditText.getText().toString().matches("")){
-
-      Toast.makeText( this,"A username and mobile number are required",Toast.LENGTH_SHORT).show();
-  }
-  else
-      {
-      ParseUser user = new ParseUser();
-
-      user.setUsername(usernameEditText.getText().toString());
-          phoneno = passwordEditText.getText().toString();
-
-          user.setPassword(phoneno);
-      user.put("PhoneNumber",passwordEditText.getText().toString());
+  // SharedPreferences sharedPreferences;
 
 
-      user.signUpInBackground(new SignUpCallback() {
-          @Override
-          public void done(ParseException e)
-          {
 
-              if(e== null){
+    public void SignIn (View view){
 
-                  Log.i("Signup", "Successful");
-              } else{
-                  Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-              }
-          }
-      });
-          Intent launchNextActivity;
-          launchNextActivity = new Intent(MainActivity.this, VictimActivity.class);
-          launchNextActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          launchNextActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-          launchNextActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-          startActivity(launchNextActivity);
+        EditText VehicleNumber = (EditText) findViewById(R.id.VehicleNumber);
+        EditText DriverMobileNumber =(EditText) findViewById(R.id.DriverMobileNumber);
 
-     }
- }
+        if(VehicleNumber.getText().toString().matches("") || DriverMobileNumber.getText().toString().length()!=10){
+
+            if(DriverMobileNumber.getText().toString().length()!=10)
+            {    Toast.makeText(this, "Enter Valid Phone number", Toast.LENGTH_SHORT).show();
+                 DriverMobileNumber.setText("");
+            }
+            Toast.makeText(this, "vehicle registration number and mobile number are cumpulsory!", Toast.LENGTH_SHORT).show();
 
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+        } else {
+            //ParseUser Driver = new ParseUser();
+            //Driver.setUsername(VehicleNumber.getText().toString());
+            //Driver.setPassword(DriverMobileNumber.getText().toString());
 
-    
-    ParseAnalytics.trackAppOpenedInBackground(getIntent());
-  }
+            ParseObject userDriver = new ParseObject("userDriver");
+            userDriver.put("saviourMobileNumber",DriverMobileNumber.getText().toString() );
+            userDriver.put("vehicleNumber",VehicleNumber.getText().toString() );
+
+            userDriver.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e==null)
+                    {
+                      //  sharedPreferences.edit().putString("drivername",ParseUser.getCurrentUser().getUsername().toString()).apply();
+                        Toast.makeText(MainActivity.this,"successful",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this,requestView.class);
+
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(MainActivity.this,"check your network connection ",Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            });
+
+
+/*
+            Driver.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e==null){
+                        Log.i("sign In", "successful!");
+                    }else {
+                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            */
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+     //   sharedPreferences=this.getSharedPreferences("com.parse.starter", Context.MODE_PRIVATE);
+       /* if(sharedPreferences.getString("drivername","").equals(ParseUser.getCurrentUser().getUsername().toString()));
+        {
+            Intent intent = new Intent(MainActivity.this,requestView.class);
+
+            startActivity(intent);
+
+        }
+*/
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
+
+
+
+    }
 
 }

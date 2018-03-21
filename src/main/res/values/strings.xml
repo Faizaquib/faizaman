@@ -16,5 +16,4 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_rider">Map</string>
     <string name="title_activity_driver_location">Map</string>
-    <string name="title_activity_victim">Map</string>
 </resources>
